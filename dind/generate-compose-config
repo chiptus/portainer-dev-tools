@@ -1,0 +1,53 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+# Check if an argument is provided for the number of services
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <number_of_services>"
+    exit 1
+fi
+
+num_services="$1"
+
+# Start the Docker Compose configuration
+cat <<EOL
+version: "3"
+services:
+EOL
+
+# Generate service definitions
+for ((i = 1; i <= num_services; i++)); do
+    cat <<EOL
+  service$i:
+    image: docker:dind
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.16.0.$((i + 1))
+    command:
+      [
+        "dockerd",
+        "-H",
+        "unix:///var/run/docker.sock",
+        "-H",
+        "tcp://0.0.0.0:2375",
+        "--tls=false"
+      ]
+    environment:
+      - DOCKER_TLS_CERTDIR=
+      - DOCKER_HOST=tcp://172.16.0.$((i + 1)):2375
+    # Add additional configurations for service$i if needed
+EOL
+done
+
+# Add network configuration
+cat <<EOL
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+EOL

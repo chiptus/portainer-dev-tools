@@ -1,0 +1,80 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+cmd=(docker compose -p dind-swarm -f docker-compose.swarm.yaml)
+
+
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+if [ "${1:-""}" = "help" ]; then
+  echo "Usage: $0 [docker-compose args]"
+  exit 0
+fi
+
+if [[ "${1:-""}" != ""  &&  "${1:-""}" != "deploy" ]]; then
+  "${cmd[@]}" "${@:-""}"
+  exit 0
+fi
+
+
+echo "Starting dind-swarm"
+
+"${cmd[@]}" up -d
+
+sleep 5
+
+#===============
+# Starting swarm
+#===============
+MANAGER_IP="172.118.0.2"
+WORKER_IP="172.118.0.3"
+echo "### Initializing main master"
+docker -H $MANAGER_IP:2375  swarm init --advertise-addr "$MANAGER_IP" || true
+
+#===============
+# Adding members
+#===============
+# MANAGER_TOKEN=$(docker swarm join-token -q manager)
+WORKER_TOKEN=$(docker -H $MANAGER_IP:2375 swarm join-token -q worker)
+
+# for i in $(seq 2 "$MANAGER"); do
+#   echo "### Joining manager: swarm-manager$i"
+#   docker --host=localhost:"${i}"2375 swarm join --token "${MANAGER_TOKEN}" "${MANAGER_IP}":2377
+# done
+
+# echo "### Joining worker: swarm-manager$i"
+docker -H $WORKER_IP:2375 swarm join --token "${WORKER_TOKEN}" "${MANAGER_IP}":2377 || true
+
+
+# docker -H $MANAGER_IP:2375 node ls
+
+echo "cleaning"
+docker -H $MANAGER_IP:2375 service rm portainer_edge_agent || true
+docker -H $MANAGER_IP:2375 network rm portainer_agent_network && sleep 5 || true
+
+
+
+echo "creating services"
+docker -H $MANAGER_IP:2375 network create \
+  --driver overlay \
+  portainer_agent_network 
+
+docker -H $MANAGER_IP:2375 service create \
+  --name portainer_edge_agent \
+  --network portainer_agent_network \
+  -e EDGE="${EDGE:-""}" \
+  -e EDGE_ID="${EDGE_ID:-"dind-swarm"}" \
+  -e EDGE_KEY="${EDGE_KEY:-""}" \
+  -e EDGE_INSECURE_POLL=1 \
+  -e AGENT_CLUSTER_ADDR=tasks.portainer_edge_agent \
+  --mode global \
+  -p 9001:9001/tcp \
+  --constraint 'node.platform.os == linux' \
+  --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
+  --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes \
+  --mount type=bind,src=//,dst=/host \
+  --mount type=volume,src=portainer_agent_data,dst=/data \
+  portainerci/agent:2.19

@@ -1,0 +1,1 @@
+/container/path/foo                  *(ro,no_subtree_check)

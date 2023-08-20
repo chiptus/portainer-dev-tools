@@ -1,0 +1,52 @@
+version: "3"
+services:
+  service1:
+    image: docker:dind
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.118.0.2
+    # volumes:
+    #   - ./daemon.json:/etc/docker/daemon.json
+    command:
+      [
+        "dockerd",
+        "-H",
+        "unix:///var/run/docker.sock",
+        "-H",
+        "tcp://0.0.0.0:2375",
+        "--tls=false",
+      ]
+    environment:
+      - DOCKER_TLS_CERTDIR=
+      - DOCKER_HOST=tcp://172.118.0.2:2375
+    # Add additional configurations for service1 if needed
+
+  service2:
+    image: docker:dind
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.118.0.3
+    command:
+      [
+        "dockerd",
+        "-H",
+        "unix:///var/run/docker.sock",
+        "-H",
+        "tcp://0.0.0.0:2375",
+        "--tls=false",
+      ]
+    # volumes:
+    #   - ./daemon.json:/etc/docker/daemon.json
+    environment:
+      - DOCKER_TLS_CERTDIR=
+      - DOCKER_HOST=tcp://172.118.0.3:2375
+    # Add additional configurations for service2 if needed
+
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.118.0.0/24

@@ -1,0 +1,70 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+config_file=docker-compose.standalone.yaml
+
+cmd=(docker compose -p dind-standalone -f "$config_file")
+
+if [ ! -f "$config_file" ]; then
+  echo "use \"./generate-compose-config \$services > $config_file\" \$services to generate a config file in $config_file"
+  exit 1 
+fi
+
+if [ "${1:-""}" = "help" ]; then
+  echo "Usage: $0 [docker-compose args]"
+  exit 0
+fi
+action="${1:-"deploy"}"
+if [[ "$action" != "deploy" ]]; then
+  "${cmd[@]}" "${@:-""}"
+  exit 0
+fi
+
+echo "Starting dind-standalone"
+
+
+"${cmd[@]}" up -d
+
+if [[ "${SKIP_DEPLOY:-""}" = "1" ]]; then
+  exit 0
+fi
+
+sleep 5
+
+num_services=$(grep -c "^[[:space:]]\+image: docker:dind" "$config_file")
+
+for i in $(seq 1 $num_services); do
+  edgeId=""
+  if [ "${EDGE:-""}" = "1" ]; then
+    edgeId="${EDGE_ID:-"dind-standalone"}-$i"
+  fi
+
+  EDGE=${EDGE:-""} \
+  EDGE_ID="$edgeId" \
+  EDGE_KEY="${EDGE_KEY:-""}" \
+  IMAGE_NAME="${IMAGE_NAME:-""}" \
+  ./deploy-agent
+
+  # docker -H "172.16.0.$(($i + 1)):2375" run -d \
+  #   -v /var/run/docker.sock:/var/run/docker.sock \
+  #   -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+  #   -v /:/host \
+  #   -e EDGE="${EDGE:-""}" \
+  #   -e LOG_LEVEL=DEBUG \
+  #   -e EDGE_ID="$edgeId" \
+  #   -e EDGE_KEY="${EDGE_KEY:-""}" \
+  #   -e EDGE_INSECURE_POLL=1 \
+  #   --name portainer_edge_agent \
+  #   "${IMAGE_NAME:-"portainerci/agent:develop"}"
+done
+
+
+
+
+
+

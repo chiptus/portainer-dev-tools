@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+cmd=(docker)
+
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+if [[ -n ${HOST:-""} ]]; then
+  cmd+=(-H "$HOST:2375")
+fi
+
+## clean
+"${cmd[@]}" rm -f portainer_edge_agent || true
+
+"${cmd[@]}" run -d \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+    -v /:/host \
+    -e EDGE="${EDGE:-""}" \
+    -e LOG_LEVEL=DEBUG \
+    -e EDGE_ID="${EDGE_ID:-"edge-agent"}" \
+    -e EDGE_KEY="${EDGE_KEY:-""}" \
+    -e EDGE_INSECURE_POLL=1 \
+    --name portainer_edge_agent \
+    "${IMAGE_NAME:-"portainerci/agent:develop"}"

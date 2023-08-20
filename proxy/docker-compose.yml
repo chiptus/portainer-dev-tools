@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  proxy:
+    image: nginx
+    ports:
+      - "8080:8080" # http
+      - "8443:8443" # https
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/nginx/certs # Mount the directory containing SSL/TLS certificates
+
+  agent:
+    image: agent-proxy
+    environment:
+      HTTP_PROXY: "http://proxy:8080"
+      HTTPS_PROXY: "https://proxy:8443"
+      LOG_LEVEL: DEBUG
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - agent-network
+
+networks:
+  agent-network:

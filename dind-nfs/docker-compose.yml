@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  nfs-server:
+    volumes:
+      - ./shared:/container/path/foo
+      - ./exports.txt:/etc/exports:ro
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - 2049:2049
+    image: erichough/nfs-server
