@@ -1,0 +1,3 @@
+docker compose up -d
+curl --insecure -H "x-k2d-secret: e2b3599e-5b74-4ad6-b07b-4fb442845562" https://172.17.0.1:6443/k2d/kubeconfig > kubeconfig 
+export KUBECONFIG=$(pwd)/k2d/kubeconfig

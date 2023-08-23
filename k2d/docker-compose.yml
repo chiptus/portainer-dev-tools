@@ -3,9 +3,12 @@ version: "3"
 services:
   k2d:
     image: portainer/k2d:1.0.0-alpha
-    network_mode: host
+    network_mode: bridge
+    ports:
+      - 6443:6443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/var/lib/k2d
     environment:
-      - K2D_ADVERTISE_ADDR=192.168.1.15
+      - K2D_ADVERTISE_ADDR=172.17.0.1
+      - K2D_SECRET=e2b3599e-5b74-4ad6-b07b-4fb442845562
