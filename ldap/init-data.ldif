@@ -76,14 +76,14 @@ userPassword: Password15
 # Entry for Group1
 dn: cn=Group1,ou=groups,{{ LDAP_BASE_DN }}
 objectClass: top
-objectClass: groupOfUniqueNames
+objectClass: groupOfNames
 cn: Group1
 description: Group1
-uniqueMember: uid=user11,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user12,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user13,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user14,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user15,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user11,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user12,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user13,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user14,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user15,ou=users,{{ LDAP_BASE_DN }}
 
 # Entry for User21
 dn: uid=user21,ou=users,{{ LDAP_BASE_DN }}
@@ -148,14 +148,14 @@ userPassword: Password25
 # Entry for Group2
 dn: cn=Group2,ou=groups,{{ LDAP_BASE_DN }}
 objectClass: top
-objectClass: groupOfUniqueNames
+objectClass: groupOfNames
 cn: Group2
 description: Group2
-uniqueMember: uid=user21,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user22,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user23,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user24,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user25,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user21,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user22,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user23,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user24,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user25,ou=users,{{ LDAP_BASE_DN }}
 
 # Entry for User31
 dn: uid=user31,ou=users,{{ LDAP_BASE_DN }}
@@ -220,14 +220,14 @@ userPassword: Password35
 # Entry for Group3
 dn: cn=Group3,ou=groups,{{ LDAP_BASE_DN }}
 objectClass: top
-objectClass: groupOfUniqueNames
+objectClass: groupOfNames
 cn: Group3
 description: Group3
-uniqueMember: uid=user31,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user32,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user33,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user34,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user35,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user31,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user32,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user33,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user34,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user35,ou=users,{{ LDAP_BASE_DN }}
 
 # Entry for User41
 dn: uid=user41,ou=users,{{ LDAP_BASE_DN }}
@@ -292,12 +292,12 @@ userPassword: Password45
 # Entry for Group4
 dn: cn=Group4,ou=groups,{{ LDAP_BASE_DN }}
 objectClass: top
-objectClass: groupOfUniqueNames
+objectClass: groupOfNames
 cn: Group4
 description: Group4
-uniqueMember: uid=user41,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user42,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user43,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user44,ou=users,{{ LDAP_BASE_DN }}
-uniqueMember: uid=user45,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user41,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user42,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user43,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user44,ou=users,{{ LDAP_BASE_DN }}
+member: uid=user45,ou=users,{{ LDAP_BASE_DN }}
 

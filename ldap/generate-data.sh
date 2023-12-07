@@ -46,10 +46,10 @@ generate_group_entry() {
 # Entry for $CN
 dn: cn=$CN,ou=groups,{{ LDAP_BASE_DN }}
 objectClass: top
-objectClass: groupOfUniqueNames
+objectClass: groupOfNames
 cn: $CN
 description: $CN
-$(for member in "${MEMBERS[@]}"; do echo "uniqueMember: $member"; done)
+$(for member in "${MEMBERS[@]}"; do echo "member: $member"; done)
 
 EOL
 }
