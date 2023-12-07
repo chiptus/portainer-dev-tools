@@ -1,0 +1,303 @@
+
+# Entry for the users organizational unit
+dn: ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: organizationalUnit
+ou: users
+description: Users
+
+# Entry for the users organizational unit
+dn: ou=groups,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: organizationalUnit
+ou: groups
+description: Groups
+
+# Entry for User11
+dn: uid=user11,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user11
+cn: User11
+sn: 11
+givenName: User
+userPassword: Password11
+
+# Entry for User12
+dn: uid=user12,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user12
+cn: User12
+sn: 12
+givenName: User
+userPassword: Password12
+
+# Entry for User13
+dn: uid=user13,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user13
+cn: User13
+sn: 13
+givenName: User
+userPassword: Password13
+
+# Entry for User14
+dn: uid=user14,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user14
+cn: User14
+sn: 14
+givenName: User
+userPassword: Password14
+
+# Entry for User15
+dn: uid=user15,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user15
+cn: User15
+sn: 15
+givenName: User
+userPassword: Password15
+
+# Entry for Group1
+dn: cn=Group1,ou=groups,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: Group1
+description: Group1
+uniqueMember: uid=user11,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user12,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user13,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user14,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user15,ou=users,{{ LDAP_BASE_DN }}
+
+# Entry for User21
+dn: uid=user21,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user21
+cn: User21
+sn: 21
+givenName: User
+userPassword: Password21
+
+# Entry for User22
+dn: uid=user22,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user22
+cn: User22
+sn: 22
+givenName: User
+userPassword: Password22
+
+# Entry for User23
+dn: uid=user23,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user23
+cn: User23
+sn: 23
+givenName: User
+userPassword: Password23
+
+# Entry for User24
+dn: uid=user24,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user24
+cn: User24
+sn: 24
+givenName: User
+userPassword: Password24
+
+# Entry for User25
+dn: uid=user25,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user25
+cn: User25
+sn: 25
+givenName: User
+userPassword: Password25
+
+# Entry for Group2
+dn: cn=Group2,ou=groups,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: Group2
+description: Group2
+uniqueMember: uid=user21,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user22,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user23,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user24,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user25,ou=users,{{ LDAP_BASE_DN }}
+
+# Entry for User31
+dn: uid=user31,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user31
+cn: User31
+sn: 31
+givenName: User
+userPassword: Password31
+
+# Entry for User32
+dn: uid=user32,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user32
+cn: User32
+sn: 32
+givenName: User
+userPassword: Password32
+
+# Entry for User33
+dn: uid=user33,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user33
+cn: User33
+sn: 33
+givenName: User
+userPassword: Password33
+
+# Entry for User34
+dn: uid=user34,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user34
+cn: User34
+sn: 34
+givenName: User
+userPassword: Password34
+
+# Entry for User35
+dn: uid=user35,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user35
+cn: User35
+sn: 35
+givenName: User
+userPassword: Password35
+
+# Entry for Group3
+dn: cn=Group3,ou=groups,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: Group3
+description: Group3
+uniqueMember: uid=user31,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user32,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user33,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user34,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user35,ou=users,{{ LDAP_BASE_DN }}
+
+# Entry for User41
+dn: uid=user41,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user41
+cn: User41
+sn: 41
+givenName: User
+userPassword: Password41
+
+# Entry for User42
+dn: uid=user42,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user42
+cn: User42
+sn: 42
+givenName: User
+userPassword: Password42
+
+# Entry for User43
+dn: uid=user43,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user43
+cn: User43
+sn: 43
+givenName: User
+userPassword: Password43
+
+# Entry for User44
+dn: uid=user44,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user44
+cn: User44
+sn: 44
+givenName: User
+userPassword: Password44
+
+# Entry for User45
+dn: uid=user45,ou=users,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: user45
+cn: User45
+sn: 45
+givenName: User
+userPassword: Password45
+
+# Entry for Group4
+dn: cn=Group4,ou=groups,{{ LDAP_BASE_DN }}
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: Group4
+description: Group4
+uniqueMember: uid=user41,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user42,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user43,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user44,ou=users,{{ LDAP_BASE_DN }}
+uniqueMember: uid=user45,ou=users,{{ LDAP_BASE_DN }}
+

@@ -1,0 +1,29 @@
+services:
+  phpldapadmin:
+    ports:
+      - 3880:80
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - PHPLDAPADMIN_HTTPS=false
+    image: osixia/phpldapadmin:0.9.0
+    depends_on:
+      - openldap
+
+  openldap:
+    image: osixia/openldap:1.5.0 # https://github.com/osixia/docker-openldap
+    volumes:
+      - db:/var/lib/ldap
+      - ./init-data.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+    ports:
+      - 389:389
+      - 636:636
+    command: [--copy-service, --loglevel, debug]
+
+    # environment:
+    #   LDAP_ORGANISATION: # default: "Example Inc."
+    #   LDAP_DOMAIN: # default: "example.org"
+    #   LDAP_ADMIN_PASSWORD: # default: "admin"
+
+volumes:
+  config:
+  db:
