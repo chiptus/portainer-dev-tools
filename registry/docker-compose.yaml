@@ -7,15 +7,30 @@ services:
       - 5000:5000
     volumes:
       - registry:/var/lib/registry
+      - "./auth:/auth"
+      - "./certs:/certs"
     environment:
       - REGISTRY_STORAGE_DELETE_ENABLED=true
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
+      - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
   browser:
     image: klausmeyer/docker-registry-browser
+    ports:
+      - 5001:8080
     environment:
       - DOCKER_REGISTRY_URL=http://registry:5000
       - SECRET_KEY_BASE=6db80b9e2036c41f65f46450c37c27f4b04dfb21457b6872745278f66d798848673f6cd7c754ab9e719ea5a72e0dd30de8bce8a28be1f04f9873c95afa6febd0
-    ports:
-      - 5001:8080
+      - "NO_SSL_VERIFICATION=true"
+      - "BASIC_AUTH_USER=testuser" # same user and pass as registry
+      - "BASIC_AUTH_PASSWORD=testpassword"
+      # - "SSL_CERT_PATH=/domain.crt"
+      # - "SSL_KEY_PATH=/domain.key"
+      - REGISTRY_LOG_LEVEL=debug
+    volumes:
+      - "./certs:/certs"
 
 volumes:
   registry:
