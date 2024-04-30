@@ -2,6 +2,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+docker context use default
+
 cmd=(docker compose -p dind-swarm -f docker-compose.swarm.yaml)
 
 
@@ -51,30 +53,30 @@ docker -H $WORKER_IP:2375 swarm join --token "${WORKER_TOKEN}" "${MANAGER_IP}":2
 
 # docker -H $MANAGER_IP:2375 node ls
 
-echo "cleaning"
-docker -H $MANAGER_IP:2375 service rm portainer_edge_agent || true
-docker -H $MANAGER_IP:2375 network rm portainer_agent_network && sleep 5 || true
+# echo "cleaning"
+# docker -H $MANAGER_IP:2375 service rm portainer_edge_agent || true
+# docker -H $MANAGER_IP:2375 network rm portainer_agent_network && sleep 5 || true
 
 
 
-echo "creating services"
-docker -H $MANAGER_IP:2375 network create \
-  --driver overlay \
-  portainer_agent_network 
+# echo "creating services"
+# docker -H $MANAGER_IP:2375 network create \
+#   --driver overlay \
+#   portainer_agent_network 
 
-docker -H $MANAGER_IP:2375 service create \
-  --name portainer_edge_agent \
-  --network portainer_agent_network \
-  -e EDGE="${EDGE:-""}" \
-  -e EDGE_ID="${EDGE_ID:-"dind-swarm"}" \
-  -e EDGE_KEY="${EDGE_KEY:-""}" \
-  -e EDGE_INSECURE_POLL=1 \
-  -e AGENT_CLUSTER_ADDR=tasks.portainer_edge_agent \
-  --mode global \
-  -p 9001:9001/tcp \
-  --constraint 'node.platform.os == linux' \
-  --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
-  --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes \
-  --mount type=bind,src=//,dst=/host \
-  --mount type=volume,src=portainer_agent_data,dst=/data \
-  portainerci/agent:2.19
+# docker -H $MANAGER_IP:2375 service create \
+#   --name portainer_edge_agent \
+#   --network portainer_agent_network \
+#   -e EDGE="${EDGE:-""}" \
+#   -e EDGE_ID="${EDGE_ID:-"dind-swarm"}" \
+#   -e EDGE_KEY="${EDGE_KEY:-""}" \
+#   -e EDGE_INSECURE_POLL=1 \
+#   -e AGENT_CLUSTER_ADDR=tasks.portainer_edge_agent \
+#   --mode global \
+#   -p 9001:9001/tcp \
+#   --constraint 'node.platform.os == linux' \
+#   --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
+#   --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes \
+#   --mount type=bind,src=//,dst=/host \
+#   --mount type=volume,src=portainer_agent_data,dst=/data \
+#   portainerci/agent:2.19
