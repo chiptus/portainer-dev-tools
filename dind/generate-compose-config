@@ -25,7 +25,7 @@ for ((i = 1; i <= num_services; i++)); do
     privileged: true
     networks:
       mynetwork:
-        ipv4_address: 172.16.0.$((i + 1))
+        ipv4_address: 172.116.0.$((i + 1))
     command:
       [
         "dockerd",
@@ -37,7 +37,7 @@ for ((i = 1; i <= num_services; i++)); do
       ]
     environment:
       - DOCKER_TLS_CERTDIR=
-      - DOCKER_HOST=tcp://172.16.0.$((i + 1)):2375
+      - DOCKER_HOST=tcp://172.116.0.$((i + 1)):2375
     # Add additional configurations for service$i if needed
 EOL
 done
@@ -49,5 +49,5 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.16.0.0/24
+        - subnet: 172.116.0.0/24
 EOL

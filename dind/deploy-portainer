@@ -1,0 +1,33 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+DOCKER_HOST=${DOCKER_HOST:-"172.116.0.2"}
+
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+
+cmd=docker
+cmd+=(-H "$DOCKER_HOST:2375")
+
+
+
+## create volume if not exists
+"${cmd[@]}" volume inspect portainer_data || "${cmd[@]}" volume create portainer_data
+
+"${cmd[@]}" rm -f portainer || true
+
+"${cmd[@]}" run -d \
+ -p 8000:8000 \
+ -p 9443:9443 \
+ -p 9000:9000 \
+ --name portainer \
+ --restart=always \
+ -e UPGRADE_SKIP_PULL_PORTAINER_IMAGE=1 \
+ -v /var/run/docker.sock:/var/run/docker.sock \
+ -v portainer_data:/data \
+ "portainerci/portainer-ce:pr11728" \
+ --log-level DEBUG --admin-password \$2a\$10\$OAD9oxPqXo3KMj4MJDAS5O/KozGFxQDX.uztGUVytD/p7El10Mtk2
+ # --license-key 3-t5gcf0YSSM/pKb78y4qdiAGk972RLknf0d4oRexT8w5lTcVzRCZ3Zm+LIAf0pl3QNMF9sjEdNi1taoWfr9mZZo+v

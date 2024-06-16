@@ -1,11 +1,29 @@
-## test --abort-on-container-exit and --exit-code-from nonstop
-## both will finish fast because `finish` will exit with 0
-
-version: "3"
+# Portainer Container for Docker
+version: "3.9"
 
 services:
-  nonstop:
-    image: nginx
-  finish:
-    image: nginx
-    command: ["exit", "0"]
+  portainer:
+    container_name: portainer
+    hostname: portainer
+    #image: portainer/portainer-ce:latest
+    image: portainerci/portainer:2.20
+    restart: "no"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    #restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/libvirt/images/sas/docker-storage/portainer/portainer-data:/data
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    # networks:
+    #   dhcp:
+    #     mac_address: de:ad:be:ef:00:01
+networks:
+  dhcp:
+    name: dbrv100
+    external: true

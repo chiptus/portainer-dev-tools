@@ -42,6 +42,7 @@ spec:
       containers:
         - name: portainer-agent
           image: portainer/agent:latest
+          # imagePullPolicy: "Never"
           env:
             - name: LOG_LEVEL
               value: DEBUG

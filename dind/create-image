@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+cd "$PORTAINER_HOME"/portainer
+
+make build-image
+
+./load_image portainerci/portainer-ce:local "$1"
+
+docker -H "$1" service update --image portainerci/portainer-ce:local --force portainer_portainer
+
+docker -H "$1" service logs portainer_portainer -f

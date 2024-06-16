@@ -36,32 +36,21 @@ fi
 
 sleep 5
 
-num_services=$(grep -c "^[[:space:]]\+image: docker:dind" "$config_file")
+# num_services=$(grep -c "^[[:space:]]\+image: docker:dind" "$config_file")
 
-for i in $(seq 1 $num_services); do
-  edgeId=""
-  if [ "${EDGE:-""}" = "1" ]; then
-    edgeId="${EDGE_ID:-"dind-standalone"}-$i"
-  fi
+# for i in $(seq 1 $num_services); do
+#   edgeId=""
+#   if [ "${EDGE:-""}" = "1" ]; then
+#     edgeId="${EDGE_ID:-"dind-standalone"}-$i"
+#   fi
 
-  EDGE=${EDGE:-""} \
-  EDGE_ID="$edgeId" \
-  EDGE_KEY="${EDGE_KEY:-""}" \
-  IMAGE_NAME="${IMAGE_NAME:-""}" \
-  ./deploy-agent
+#   EDGE=${EDGE:-""} \
+#   EDGE_ID="$edgeId" \
+#   EDGE_KEY="${EDGE_KEY:-""}" \
+#   IMAGE_NAME="${IMAGE_NAME:-""}" \
+#   ./deploy-agent
 
-  # docker -H "172.16.0.$(($i + 1)):2375" run -d \
-  #   -v /var/run/docker.sock:/var/run/docker.sock \
-  #   -v /var/lib/docker/volumes:/var/lib/docker/volumes \
-  #   -v /:/host \
-  #   -e EDGE="${EDGE:-""}" \
-  #   -e LOG_LEVEL=DEBUG \
-  #   -e EDGE_ID="$edgeId" \
-  #   -e EDGE_KEY="${EDGE_KEY:-""}" \
-  #   -e EDGE_INSECURE_POLL=1 \
-  #   --name portainer_edge_agent \
-  #   "${IMAGE_NAME:-"portainerci/agent:develop"}"
-done
+# done
 
 
 

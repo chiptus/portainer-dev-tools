@@ -1,11 +1,10 @@
-version: "3"
 services:
   service1:
     image: docker:dind
     privileged: true
     networks:
       mynetwork:
-        ipv4_address: 172.16.0.2
+        ipv4_address: 172.116.0.2
     command:
       [
         "dockerd",
@@ -17,11 +16,11 @@ services:
       ]
     environment:
       - DOCKER_TLS_CERTDIR=
-      - DOCKER_HOST=tcp://172.16.0.2:2375
+      - DOCKER_HOST=tcp://172.116.0.2:2375
     # Add additional configurations for service1 if needed
 networks:
   mynetwork:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.16.0.0/24
+        - subnet: 172.116.0.0/24

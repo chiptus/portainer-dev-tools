@@ -1,0 +1,11 @@
+## test --abort-on-container-exit and --exit-code-from nonstop
+## both will finish fast because `finish` will exit with 0
+
+version: "3"
+
+services:
+  nonstop:
+    image: nginx
+  finish:
+    image: nginx
+    command: ["exit", "0"]
